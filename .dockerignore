@@ -1,0 +1,14 @@
+.git
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+data/
+powerbi_exports/
+*.pbix
+*.csv
+*.parquet
+
+.venv/
+venv/
+.env

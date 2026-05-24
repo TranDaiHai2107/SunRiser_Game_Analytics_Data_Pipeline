@@ -1,0 +1,10 @@
+services:
+  sunriser-pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sunriser_de_pipeline
+    volumes:
+      - ./data:/app/data
+      - ./powerbi_exports:/app/powerbi_exports
+    command: python src/run_pipeline.py
