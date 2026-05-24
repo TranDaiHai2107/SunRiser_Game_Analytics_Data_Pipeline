@@ -15,3 +15,7 @@ This project converts raw game event logs into analytics-ready fact tables for P
 ## Data Pipeline
 
 Raw CSV -> Bronze -> Silver -> Gold -> Power BI
+## Run with Docker
+
+```bash
+docker compose up --build
