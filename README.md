@@ -4,70 +4,70 @@
 
 SunRiser is a game analytics data engineering project that transforms raw gameplay event logs into an analytics-ready fact table for Power BI.
 
-The project started as an exploratory game case study and was extended into a local batch ETL pipeline with Docker, Airflow orchestration, data quality checks, and Power BI reporting.
+The project started from a game analytics case study and was extended into a local batch ETL pipeline with Docker, Airflow orchestration, data quality checks, and Power BI reporting.
 
 ## Case Study Objective
 
-The original case study focuses on analyzing user progression across game levels. The goal is to identify levels with potential gameplay issues and provide suitable visualizations to monitor those issues.
+The dataset contains player progress events across game levels. The main objective is to analyze the data, identify levels that may have gameplay issues, and design suitable visualizations to monitor those issues.
 
-The analysis answers three main questions:
+The case study focuses on:
 
-- Which levels have high player drop-off?
-- Which levels are unusually difficult or frustrating?
-- How should these issues be monitored in Power BI?
+- Exploring the event-level gameplay data.
+- Defining metrics to detect problematic levels.
+- Identifying levels with high drop-off or abnormal difficulty.
+- Building Power BI visuals to monitor level performance by level, device, country, and game mode.
 
-## Business Context
+## Dashboard Overview
 
-The dataset contains gameplay events from users progressing through different levels. Each event is either a `level_start` or `level_end` event.
+Add the Power BI dashboard overview image here:
 
-Important fields include:
+```markdown
+![Dashboard Overview](reports/images/dashboard_overview.png)
+```
 
-- User and session identifiers
-- Event timestamp
-- Event name
-- App version
-- Level
-- Time played
-- Success result
-- Game mode
-- Country
-- Device and operating system
-
-The final Power BI dashboard uses the cleaned event-level table to analyze drop-off, success rate, retry behavior, and level difficulty.
-
-## Key Insights from the Analysis
-
-The final analysis report is available at:
+Suggested folder:
 
 ```text
-reports/pdf/SunRiser_Analysis_Report.pdf
+reports/images/dashboard_overview.png
 ```
+
+## Business Questions
+
+The analysis answers the following questions:
+
+- Which levels have high player drop-off?
+- Which levels have unusually low success rate or high fail rate?
+- Which levels require many retries or unusually long play time?
+- What visualizations can help monitor these level issues?
+
+## Key Findings
+
+The Power BI report focuses on detecting problematic levels rather than proving final root causes.
 
 Main findings:
 
-- Overall success rate is around **74.27%**, which suggests that the game is generally playable across the analyzed levels.
-- The data is concentrated mostly on **Mobile**, while Desktop and Tablet represent smaller user groups and should not be treated as equally representative.
-- There is a major funnel issue from **Start Level** to **Attempt Level**.
-- **Level 1 has an in-level drop-off rate of about 49.85%**, meaning almost half of users who start Level 1 do not continue into the next meaningful attempt/progression step.
-- Platform filtering suggests that the Level 1 problem is not purely a device issue. Desktop drop-off is even higher than Mobile, so the issue is more likely related to onboarding, tutorial design, or early game experience.
-- **Post-success drop-off between Level 3 and Level 4 is around 37-40%**, meaning many users win but still do not continue. This points to a weak reward loop or lack of motivation to proceed.
-- There is a visible traffic spike around **15/02**, likely caused by a campaign, update, or in-game event. After that point, the trend declines, suggesting lower retention after the spike.
-- Levels around **38-42** show a mid-game break point where continuation drops sharply.
-- Levels after **50** show unstable continuation behavior, which may indicate inconsistent level design quality.
-- Levels around **70-94** are difficult in the traditional sense, with fail rates reaching around **60%**.
-- **Level 2 is a high-priority issue** because fail rate is around **54%** while average play time is short, suggesting that new users may fail too quickly before understanding the game.
-- Levels **50-60** are not necessarily hard, but they appear long and may cause fatigue, especially for mobile players.
+- **Level 1 has a very high early drop-off rate**, around 49.85%, making onboarding the first area to review.
+- **Level 2 shows abnormal difficulty**, with high fail rate and short play time, suggesting players may fail too quickly before understanding the game.
+- **Levels 3-4 show post-success drop-off**, meaning some users win but do not continue, which may indicate a weak reward or progression loop.
+- **Levels 38-42 and levels after 50 show unstable continuation patterns**, making them good candidates for further review.
+- **Levels around 70-94 appear difficult**, with high fail rates compared with earlier levels.
 
-## Recommended Actions
+These findings help prioritize which levels should be reviewed by game design or product teams.
 
-Based on the analysis:
+## Reports
 
-- Redesign Level 1 onboarding and tutorial flow to reduce early drop-off.
-- Improve the reward loop after early successful levels, especially around Level 3-4.
-- Review Level 2 map design because players may be failing too quickly.
-- Rebalance difficult levels around Level 70+.
-- Review long but easy levels around Level 50-60 to reduce player fatigue.
-- Monitor drop-off, success rate, attempts per user, and median time by level in Power BI.
+Analysis artifacts:
+
+```text
+reports/pdf/SunRiser_Analysis_Report.pdf
+reports/powerbi/Report_SunRiser-Tran Dai Hai.pbix
+```
+
+The Power BI report was built from:
+
+```text
+powerbi_exports/sunriser_powerbi_fact_events.csv
+```
 
 ## Current Tech Stack
 
@@ -119,6 +119,8 @@ docs/
   pipeline_steps.md
 
 reports/
+  images/
+    dashboard_overview.png
   pdf/
     SunRiser_Analysis_Report.pdf
   powerbi/
@@ -204,17 +206,6 @@ The exported fact table supports DAX metrics such as:
 - Attempts per User
 - Average Time Played
 - Median Time Played
-
-## Reports
-
-The project includes reporting artifacts:
-
-```text
-reports/pdf/SunRiser_Analysis_Report.pdf
-reports/powerbi/Report_SunRiser-Tran Dai Hai.pbix
-```
-
-The PDF report summarizes the main insights and recommendations from the Power BI analysis.
 
 ## How to Run with Docker
 
