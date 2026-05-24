@@ -19,17 +19,7 @@ The case study focuses on:
 
 ## Dashboard Overview
 
-Add the Power BI dashboard overview image here:
-
-```markdown
 ![Dashboard Overview](reports/images/dashboard_overview.png)
-```
-
-Suggested folder:
-
-```text
-reports/images/dashboard_overview.png
-```
 
 ## Business Questions
 
