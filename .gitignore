@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data and generated outputs
+/data/
+/powerbi_exports/
+*.csv
+*.parquet
+*.snappy.parquet
+
+# Optional: keep Power BI source files local if they become too large
+# *.pbix
